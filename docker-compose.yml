@@ -1,16 +1,42 @@
 version: '3'
+
 services:
-  web:
-    build: .
-    ports:
-      - "5000:5000"
-  db:
-    image: postgres:latest
+  mysql:
+    image: mysql:5.7
     environment:
-      POSTGRES_DB: agriculture
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-  ml-service:
-    build: ./ml-service
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: agriculture
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  spring-boot-app:
+    image: my-spring-boot-app:latest
+    build: ./spring-boot-app
     ports:
-      - "5001:5000"
+      - '8080:8080'
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+
+  flask-ml-service:
+    image: my-flask-ml-service:latest
+    build: ./flask-ml-service
+    ports:
+      - '5000:5000'
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
