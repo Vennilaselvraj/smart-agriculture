@@ -1,9 +1,21 @@
-# Node modules
-node_modules/
+# Exclusions for various environments
 
-# Python cache
-__pycache__/
+# Backend target
+/backend/target/
+
+# Frontend node_modules
+/frontend/node_modules/
+
+# Machine Learning service virtual environment
+/ml-service/venv/
 
 # IDE files
-.idea/ 
-.vscode/ 
+*.idea/
+*.vscode/
+
+# Environment variables
+.env
+
+# OS generated files
+.DS_Store
+Thumbs.db
