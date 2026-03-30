@@ -1,0 +1,8 @@
+Flask
+TensorFlow
+numpy
+opencv-python
+Werkzeug
+python-dotenv
+requests
+Pillow
